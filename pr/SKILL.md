@@ -17,7 +17,7 @@ Use this template for writing the PR body:
 
 ## Merge Danger
 
-**Door:** <one-way or two-way>
+**Revertability:** <easy | difficult | no>
 
 <optional: description>
 
