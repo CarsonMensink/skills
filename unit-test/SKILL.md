@@ -14,7 +14,10 @@ Every test must pass two checks:
 1. **Refactor check:** If someone rewrote the internals without changing behavior, would this test still pass? It must.
 2. **Break check:** If the behavior this test names stopped working, would this test fail? It must.
 
-A test that fails the refactor check is brittle. A test that fails the break check is bad. Delete or rewrite both.
+A test that fails the refactor check is brittle. A test that fails the break check provides insufficent protection.
+
+Rewrite tests that protect meaningful contracts.
+Delete tests only when their behavior is already covered or is not a requirement.
 
 ## When to use
 
@@ -28,7 +31,7 @@ Do not change expected behavior merely to accommodate implementation changes. Re
 
 **Unbreakable rules:**
 - **Arrange:** Set up only what the behavior needs. Keep relevant inputs visible and control time, randomness, and other unpredictable inputs.
-- **Act:** Test only one behavior. Multiple calls are fine when the behavior requires a sequence.
+- **Act:** Exercise one distinct behavioral contract. Multiple calls are fine when testing a sequence. Keep independently meaningful behaviors in separate tests, even when they involve the same feature.
 - **Assert:** Check the observable outcome promised by the test name. Multiple assertions are fine when they establish that outcome. Expected results must come from the requirement, not from the implementation's logic.
 - Separate these phases with comments: // Arrange, // Act, // Assert
 
@@ -99,10 +102,18 @@ Use test doubles when real dependencies require external services, cause unwante
 
 ## How many tests
 
-- The success path
-- Expected failure paths
-- One test for a general failure path
-- Edge cases
-- Crossing boundary tests
+Choose tests based on distint behavioral contracts, not a fixed checklist or target count.
 
-Minimize redundant tests. A few meaningful tests are better than a large amount of tests testing the same thing.
+Prioritize:
+- Core success scenarios.
+- Expected failure paths.
+- One test for a general failure path.
+- Boundaries where expected behavior changes.
+- Known regressions.
+
+Minimize redundant coverage, not test count.
+
+Two tests are redundant only when they protect the same behavior under equivalent conditions.
+
+Tests using the same methods are not necessarily redundant.
+Distinct states, transitions, and failure conditions may require separate tests.
